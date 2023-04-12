@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            
+                $.get("https://jsonplaceholder.typicode.com/posts", function(data){
+                    var student = "";
+                    $.each(data,function(i,item){
+                        student += '<tr><td>' +item.id  +'</td><td>' + item.title  + '</td><td>'+item.body +'</td></tr>';
+                    });
+                    $('#myTable').append(student);
+               
+            });
+
+            $("#myForm").submit(function(e){
+                e.preventDefault();
+                var title = $("#title").val();
+                var body = $("#body").val();
+                $.post("https://jsonplaceholder.typicode.com/posts", {title: title, body: body}, function(data){
+                    var newRecord = '<tr><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body + '</td></tr>';
+                    
+                    $('#myTable').append(newRecord);
+                //   console.log(data);
+                });
+                $("#title").val("");
+                $("#body").val("");
+            });
+        });
+    </script>
+
+    <style>
+        td {
+            background-color: #E4F5D4;
+            border: 1px solid black;
+        }
+
+        table,th,td,tr {
+            font-weight: bold;
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        #myForm{
+            border: 1px solid black;
+            padding-top: 10px;     
+         }
+
+        
+    </style>
+</head>
+<body>
+    <button>Get Records</button> 
+
+    <form id="myForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title"><br>
+
+        <label for="body">Body:</label>
+        <input type="text" id="body" name="body"><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <table id="myTable" style="width: 100%;">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Body</th>
+        </tr>
+    </table>
+</body>
+</html>
