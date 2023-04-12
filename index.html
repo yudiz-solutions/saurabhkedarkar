@@ -6,120 +6,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    
-     <style>
-        .outer {
+
+    <style>
+
+        /* div{
+            border: 1px solid black;
+            
+            padding: 10px;
+            margin: 10px;
+        } */
+        
+        body{
+            background: white !important;
+        }
+         #demo1 {
             width: 700px;
             height: 650px;
             margin: 50px auto;
             padding-top: 50px;
             border-radius: 10px;
             border: 1px solid black;
-            /* background-color:gold; */
-        }
-        .inner1 {
+            z-index: 1;
+            position: relative;
+        } 
+         #demo2 {
             width: 600px;
             height: 550px;
             margin: 0 auto;
             padding-top: 50px;
             border: 1px solid black;
-            /* background-color: palegoldenrod; */
+            z-index: 2;
+            position: relative;
+
         }
-        .inner2 {
+        #demo3 {
             width: 500px;
             height: 450px;
             margin: 0 auto;
             padding-top: 50px;
             border: 1px solid black;
-            /* background-color: palegreen; */
-        }
-        .inner3 {
+            z-index: 3;
+            position: relative;
+
+        } 
+         #demo4 {
             width: 400px;
             height: 350px;
             margin: 0 auto;
             padding-top: 50px;
             border: 1px solid black;
-            /* background-color: papayawhip; */
-        }
-        .inner4 {
+            z-index: 4;
+            position: relative;
+
+         } 
+         #demo5 {
             width: 300px;
             height: 250px;
             margin: 0 auto;
             padding-top: 50px;
             border: 1px solid black;
-            /* background-color: greenyellow; */
-        }
-        .inner5 {
+            z-index: 5;
+            position: relative;
+        } 
+        #demo6 {
             width: 200px;
             height: 150px;
             margin: 0 auto;
             padding-top: 50px;
             border: 1px solid black;
-            /* background-color: lightblue; */
+            z-index: 6;
+            position: relative;
+
         }
-        .inner6 {
+          #demo7{ 
             width: 100px;
             height: 50px;
             margin: 0 auto;
             padding-top: 50px;
+            z-index: 7;
+            position: relative;
+
             border: 1px solid black;
-            /* background-color: salmon; */
-        }
+         } 
         </style>
-        <script>
-//         
-
-
-
-    
-    $(document).ready(function() {
-        
-        $('.inner6, .inner5, .inner4, .inner3, .inner2, .inner1').click(function() {
-            
-            $(this).css('background-color', 'red');
-            $(this).parent().css('background-color', 'green');
-            $(this).children().css('background-color', 'blue');
-        });
-    });
-
-    
-
-    
-    // $(document).ready(function() {
-    //     // change color of clicked box and its parent boxes
-    //     $('.inner6, .inner5, .inner4, .inner3, .inner2, .inner1').click(function() {
-    //         // change color of clicked box
-    //         $(this).css('background-color', '#F29F05');
-            
-    //         // change color of parent boxes
-    //         $(this).parent().css('background-color', '#F2C94C');
-    //         $(this).child().css('background-color', 'green');
-    //         // $(this).parent().parent().css('background-color', '#F2DAB8');
-    //     });
-    // });
-
-
-
-        </script>
 </head>
 <body>
-   
+    <script>
+    $(document).ready(function() {
+            
+        $('.inner').click(function(e) {
 
-       
+            $(this).css('background-color', 'red');
+            $(this).children().css('background-color', 'blue');
+                
+                $(this).parents(".inner").css('background-color', 'green');
+                event.stopPropagation();
+                // console.log(this)
+            });
+        });
 
-    <div class="outer">
-        <div class="inner1">
-            <div class ="inner2">
-                <div class=" inner3">
-                    <div class ="inner4">
-                        <div class ="inner5">
-                            <div class="inner6">
+        </script>
+    <div id ="demo1" class="inner">
+        <div id ="demo2" class="inner">
+            <div id ="demo3" class ="inner">
+                <div id ="demo4" class=" inner">
+                    <div id ="demo5" class ="inner">
+                        <div id ="demo6" class ="inner">
+                            <div id ="demo7" class="inner">
                              </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+       
         </div>
     </div>
     
