@@ -9,29 +9,66 @@
     <script>
         $(document).ready(function(){
             
-                $.get("https://jsonplaceholder.typicode.com/posts", function(data){
-                    var student = "";
-                    $.each(data,function(i,item){
-                        student += '<tr><td>' +item.id  +'</td><td>' + item.title  + '</td><td>'+item.body +'</td></tr>';
-                    });
-                    $('#myTable').append(student);
-               
+                    $.get("https://jsonplaceholder.typicode.com/posts", function(data){
+                        var getData = "";
+                        $.each(data,function(i,item){
+                            getData += '<tr><td>' +item.id  +'</td><td>' + item.title  + '</td><td>'+item.body +"</td><td><button class ='del-bt'+post-id=''+item.id+''>Delete</button></td><td><button class ='updateBt'>Update</button></td></tr>";
+                        });
+                        $('#myTable').append(getData);
+                 
             });
+            
 
             $("#myForm").submit(function(e){
-                e.preventDefault();
-                var title = $("#title").val();
-                var body = $("#body").val();
-                $.post("https://jsonplaceholder.typicode.com/posts", {title: title, body: body}, function(data){
-                    var newRecord = '<tr><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body + '</td></tr>';
-                    
-                    $('#myTable').append(newRecord);
+        e.preventDefault();
+        // var title = $("#title").val();
+        // var body = $("#body").val();
+        let formData = $('#myForm').serialize();
+        // console.log(formData);
+        $.post("https://jsonplaceholder.typicode.com/posts", formData  ,
+            function(data){
+            var newRecord = '<tr><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body +"</td><td><button class ='del-bt'+post-id=''+data.id+''>Delete</button></td><td><button class ='updateBt'>Update</button></td></tr>";
+            
+            $('#myTable').append(newRecord);
                 //   console.log(data);
                 });
                 $("#title").val("");
                 $("#body").val("");
             });
         });
+       
+    //  $(document).on('click','.del-bt',function(){
+    //     let postId = $(this).data("id");
+    //     let row =$(this).closet("tr");
+
+    //     // e.preventDefault();
+    //     // let id =$('#remove').val();
+    //     $delete("https://jsonplaceholder.typicode.com/posts"+postId ,function(){
+    //         row.remove();
+    //     //     // $('tr[id="'+id+'"]').remove();
+    //     //     $('['+'id = id'+']').remove();
+
+    //         // let newRemove = '<tr><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body + '</td></tr>';
+    //         // $('#mytable').remove(newRemove);
+    //     })
+    //     // $("#remove").val("");
+    //  })
+
+
+    
+    $(document).on('click','.del-bt',function(){
+
+        let newRecordId = $(this).attr("data-id");
+        let recordRow = $(this).closest("tr");
+
+        $.ajax({url: "https://jsonplaceholder.typicode.com/posts/" + newRecordId,type: 'DELETE',
+            success: function(result) {
+                recordRow.remove();
+            }
+        });
+    });
+
+
     </script>
 
     <style>
@@ -48,14 +85,16 @@
         }
         #myForm{
             border: 1px solid black;
-            padding-top: 10px;     
+            padding-top: 10px; 
+            width: 250px;
+            height: 150px;    
          }
 
         
     </style>
 </head>
 <body>
-    <button>Get Records</button> 
+    <!-- <button>Get Records</button>  -->
 
     <form id="myForm">
         <label for="title">Title:</label>
@@ -66,6 +105,14 @@
 
         <input type="submit" value="Submit">
     </form>
+
+    <!-- <form id ="mydelete">
+         <label for ="remove"> ID to remove record :</label>
+        <input type = "text" id="remove" name ="remove">
+
+        <input type="submit" value="RemoveSub"> 
+
+    </form> -->
 
     <table id="myTable" style="width: 100%;">
         <tr>
