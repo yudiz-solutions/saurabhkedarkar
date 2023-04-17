@@ -73,7 +73,7 @@
                     $.get("https://jsonplaceholder.typicode.com/posts", function(data){
                         var getData = "";
                         $.each(data,function(i,item){
-                            getData += '<tr id="'+item.id+'"><td>' + item.id + '</td><td>' + item.title + '</td><td>' + item.body + '</td><td><button class="btn btn-danger"  class ="del-bt" data-data-id="' + item.id + '">Delete</button></td><td><button class="btn btn-info" class ="edit-bt" data-data-id="' + item.id + '">Edit</button></td></tr>';
+                            getData += '<tr id="'+item.id+'"><td>' + item.id + '</td><td>' + item.title + '</td><td>' + item.body + '</td><td><button class="btn btn-danger"  id ="del-bt" data-data-id="' + item.id + '">Delete</button></td><td><button class="btn btn-info" id ="edit-bt" data-data-id="' + item.id + '">Edit</button></td></tr>';
                         });
                         $('#myTable').append(getData);
                  
@@ -87,7 +87,7 @@
        
         $.post("https://jsonplaceholder.typicode.com/posts", formData  ,
             function(data){
-            var newRecord = '<tr id="'+ data.id +'"><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body + '</td><td><button class="btn btn-danger" class ="del-bt" data-data-id="' + data.id + '">Delete</button></td><td><button class="btn btn-info" class ="edit-bt" data-data-id="' + data.id + '">Edit</button></td></tr>';
+            var newRecord = '<tr id="'+ data.id +'"><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body + '</td><td><button class="btn btn-danger" id ="del-bt" data-data-id="' + data.id + '">Delete</button></td><td><button id ="edit-bt" class="btn btn-info"  data-data-id="' + data.id + '">Edit</button></td></tr>';
             
             $('#myTable').append(newRecord);
                 //   console.log(data);
@@ -101,7 +101,7 @@
     
 
     
-    $(document).on('click','.del-bt',function(){
+    $(document).on('click','#del-bt',function(){
 
         let newRecordId = $(this).attr("data-id");
         let recordRow = $(this).closest("tr");
@@ -113,7 +113,7 @@
         });
     });
 
-    $(document).on('click', '.edit-bt', function() {
+    $(document).on('click', '#edit-bt', function() {
     let postId = $(this).data("data-id");
     $.get("https://jsonplaceholder.typicode.com/posts/" + postId, function(data) {
         $("#title").val(data.title);
@@ -127,13 +127,14 @@
                 type: 'PUT',
                 data: updateData,
                 success: function(result) {
-                    let updatedRecord = '<tr id="'+result.id+'"><td>' + result.id + '</td><td>' + result.title + '</td><td>' + result.body + '</td><td><button class ="del-bt" class="btn btn-danger" data-data-id="' + data.id + '">Delete</button></td><td><button class="btn btn-info" class ="edit-bt"  data-data-id="' + result.id + '">Edit</button></td></tr>';
-                    // console.log(result.id);
-                    $( ''+ result.id ).replaceWith(updatedRecord);
+                    let updatedRecord = '<tr id="'+result.id+'"><td>' + result.id + '</td><td>' + result.title + '</td><td>' + result.body + '</td><td><button id="del-bt" class="btn btn-danger" data-data-id="' + data.id + '">Delete</button></td><td><button id ="edit-bt" class="btn btn-info"   data-data-id="' + result.id + '">Edit</button></td></tr>';
+                    console.log(result.id);
+                    $( '#'+result.id ).replaceWith(updatedRecord);
                     // console.log(result.id)
                    
                     
                     $("#myForm").trigger("reset");
+                     return ;
                 }
             });
 
