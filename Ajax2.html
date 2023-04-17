@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
    
 
@@ -23,8 +24,8 @@
         #myForm{
             border: 1px solid black;
             padding-top: 10px; 
-            width: 250px;
-            height: 150px;    
+            /* width: 250px;
+            height: 150px;     */
          }
 
         
@@ -32,16 +33,17 @@
 </head>
 <body>
     <!-- <button>Get Records</button>  -->
-
-    <form id="myForm">
+     <div class="container">
+    <form  id="myForm" class="jumbotron text-center" >
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title"><br>
+        <input  class ="form-control" type="text" id="title" name="title"><br>
 
         <label for="body">Body:</label>
-        <input type="text" id="body" name="body"><br>
+        <input class ="form-control" type="text" id="body" name="body"><br>
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit"  class="btn btn-warning"  >
     </form>
+  
 
     <!-- <form id ="mydelete">
          <label for ="remove"> ID to remove record :</label>
@@ -53,9 +55,9 @@
 
 
 
-    <table id="myTable" style="width: 100%;">
-        <tr>
-            <th>ID</th>
+    <table id="myTable" >
+        <tr class="alert alert-info">
+            <th >ID</th>
             <th>Title</th>
             <th>Body</th>
             <th >Delete Button</th>
@@ -63,6 +65,7 @@
 
         </tr>
     </table>
+</div>
     
     <script>
         $(document).ready(function(){
@@ -70,7 +73,7 @@
                     $.get("https://jsonplaceholder.typicode.com/posts", function(data){
                         var getData = "";
                         $.each(data,function(i,item){
-                            getData += '<tr id="'+item.id+'"><td>' + item.id + '</td><td>' + item.title + '</td><td>' + item.body + '</td><td><button class ="del-bt" data-data-id="' + item.id + '">Delete</button></td><td><button class ="edit-bt" data-data-id="' + item.id + '">Edit</button></td></tr>';
+                            getData += '<tr id="'+item.id+'"><td>' + item.id + '</td><td>' + item.title + '</td><td>' + item.body + '</td><td><button class="btn btn-danger"  class ="del-bt" data-data-id="' + item.id + '">Delete</button></td><td><button class="btn btn-info" class ="edit-bt" data-data-id="' + item.id + '">Edit</button></td></tr>';
                         });
                         $('#myTable').append(getData);
                  
@@ -84,13 +87,14 @@
        
         $.post("https://jsonplaceholder.typicode.com/posts", formData  ,
             function(data){
-            var newRecord = '<tr id="'+ data.id +'"><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body + '</td><td><button class ="del-bt" data-data-id="' + data.id + '">Delete</button></td><td><button class ="edit-bt" data-data-id="' + data.id + '">Edit</button></td></tr>';
+            var newRecord = '<tr id="'+ data.id +'"><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.body + '</td><td><button class="btn btn-danger" class ="del-bt" data-data-id="' + data.id + '">Delete</button></td><td><button class="btn btn-info" class ="edit-bt" data-data-id="' + data.id + '">Edit</button></td></tr>';
             
             $('#myTable').append(newRecord);
                 //   console.log(data);
                 });
-                $("#title").val("");
-                $("#body").val("");
+                // $("#title").val("");
+                // $("#body").val("");
+                $("#myForm").trigger("reset");
             });
         });
        
@@ -123,9 +127,9 @@
                 type: 'PUT',
                 data: updateData,
                 success: function(result) {
-                    let updatedRecord = '<tr id="'+result.id+'"><td>' + result.id + '</td><td>' + result.title + '</td><td>' + result.body + '</td><td><button class ="del-bt" data-data-id="' + data.id + '">Delete</button></td><td><button class ="edit-bt" data-data-id="' + result.id + '">Edit</button></td></tr>';
-                    console.log(result.id);
-                    $( '#'+result.id ).replaceWith(updatedRecord);
+                    let updatedRecord = '<tr id="'+result.id+'"><td>' + result.id + '</td><td>' + result.title + '</td><td>' + result.body + '</td><td><button class ="del-bt" class="btn btn-danger" data-data-id="' + data.id + '">Delete</button></td><td><button class="btn btn-info" class ="edit-bt"  data-data-id="' + result.id + '">Edit</button></td></tr>';
+                    // console.log(result.id);
+                    $( ''+ result.id ).replaceWith(updatedRecord);
                     // console.log(result.id)
                    
                     
