@@ -250,5 +250,156 @@
 </body>
 </html>
 
+<?php 
+    // function callback($item){
+    //     return strlen($item);
+    // }
+
+    // $str = ["saurabh","roshan","divesh"];
+    // $newarr =array_map("callback",$str);
+    // print_r($newarr);
+
+
+    #without callback
+    // $str = ["saurabh","roshan","divesh"];
+    // $newarr =array_map(function($item){ return $item;},$str);
+    // print_r($newarr);
+
+
+  #differant calling format
+    // function learning($name){
+    //   return $name." !! \n";
+    // }
+
+    // function training($name){
+    //   return $name ." ?"; 
+    // }
+    
+    
+    // function myfunc($name,$task){
+    //     echo $task($name);
+    // }
+
+    // myfunc("saurabh","learning");
+    // myfunc("roshan","training");
+
+
+     #json using encode
+      // $arr = array("saurabh","roshan");
+      // echo  json_encode($arr);
+    
+
+      #using class in php to create two object 
+      // class info{
+      //   public $name;
+      //   public $surname;
+    
+      //   function get_name($name,$surname){
+      //     $this->name = $name;
+      //     $this->surname =$surname;
+      //   }
+      //   function set_name(){
+      //     echo $this->name ."\n";
+      //     echo $this->surname;
+      //   }
+
+      // }
+
+      // $obj = new  info();
+      // $obj1 = new info();
+      // $obj ->get_name("saurabh","kedarkar");
+      // $obj1 ->get_name("roshan","thakare");
+      // $obj ->set_name();
+      // echo "\n";
+      // $obj1 ->set_name();
+?>
+
+<?php 
+
+ #using constructer and destructor
+   // class Info{
+   //    public  $🤦‍♂️;
+   //    public $name;
+      
+   //    function __construct($🤦‍♂️,$name){
+   //      $this->🤦‍♂️ =$🤦‍♂️;
+   //      $this->name =$name;
+   //    }
+
+      
+   //   function  __destruct(){
+   //    echo $this->🤦‍♂️ . \n . $this->name;
+   //   }
+
+   // }
+
+   // $obj = new Info("saurabh","roshan");
+    
+    
+    ?>
+
+<?php
+
+#using abstract class
+   // abstract class Animal{
+   //  public $name;
+   //  public function __construct($name){
+   //    $this->name=$name;
+   //  }
+
+   //  abstract public function func();
+   // }
+ 
+   // class Dog extends Animal{
+
+   //   public function func(){
+   //    return "what a name this Animal  $this->name" ;
+   //   }
+   // }
+
+   // class Tiger extends Animal{
+   //    public function func() : string{
+   //     return "what a name this Animal $this->name ";
+   //    }
+   // }
+
+   // $objDog = new Dog("dog");
+   // echo $objDog->func(); 
+   // echo "\n";
+   // $objTiger = new Tiger("tiger");
+   // echo $objTiger->func();
+?>
+
+
+<?php
+
+//   #using trait 
+//     trait mass1{
+//       public function method1(){
+//         echo "hello saurabh \t";
+//       }
+//     }
+//     trait mass2{
+//       public function method2(){
+//         echo "hello roshan";
+//       }
+//     }
+
+//     class hello{
+//       use mass1;
+//     }
+
+//     class hello1{
+//       use mass1,mass2;
+//     }
+
+//     // $obj = new hello();
+//     // $obj->method1();
+
+//     $obj2 = new hello1();
+//     $obj2->method1();
+//     $obj2->method2();
+?>
+
 </body>
 </html> -->
