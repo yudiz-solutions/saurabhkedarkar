@@ -1,7 +1,7 @@
 <?php 
  include 'connection.php';
  $id=$_GET['updateid'];
- $sql="SELECT * FROM `ueser_add` WHERE id=$id";
+ $sql="SELECT * FROM `user_add` WHERE id=$id";
  $result=mysqli_query($con,$sql);
  $row=mysqli_fetch_assoc($result);
  
@@ -36,7 +36,7 @@
       $asm.=$cur.",";
     }
 
- $sql ="UPDATE `ueser_add` SET `fname` = '$fname', `lname` = '$lname', `uname` = '$uname',`email`='$email',`password`='$password',`gender`='$gender',`country`='$country',`state`='$state',`city`='$city',`bio`='$bio',`asm`='$asm' WHERE `ueser_add`.`id` = $id ";
+ $sql ="UPDATE `user_add` SET `fname` = '$fname', `lname` = '$lname', `uname` = '$uname',`email`='$email',`password`='$password',`gender`='$gender',`country`='$country',`state`='$state',`city`='$city',`bio`='$bio',`asm`='$asm' WHERE `user_add`.`id` = $id ";
   $result=mysqli_query($con,$sql);
   if($result){
    header('location:userDisplay.php');

@@ -13,7 +13,7 @@
     $hashtag = $_POST['hashtag'];
     
     if(move_uploaded_file($temp, $folder)){
-    $sql = "INSERT INTO `post_data` (`ueser_id`,`f_post`, `caption`, `hashtag`) VALUES ('$id','$folder', '$caption', '$hashtag')";
+    $sql = "INSERT INTO `post_data` (`user_id`,`f_post`, `caption`, `hashtag`) VALUES ('$id','$folder', '$caption', '$hashtag')";
 
     // var_dump("INSERT INTO `post_data` (`post_id`,`ueser_id`,`f_post`, `caption`, `hashtag`) VALUES ( NULL,'$id','$folder', '$caption', '$hashtag')");
 

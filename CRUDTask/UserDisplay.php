@@ -39,7 +39,7 @@
       <tbody >
 
          <?php 
-            $sql="SELECT * FROM `ueser_add` ";
+            $sql="SELECT * FROM `user_add` ";
             $result=mysqli_query($con,$sql);
             $count =0;
             $num = 0;
