@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <style>
-    <style>h2 {
+    h2 {
       color: blue;
       text-align: center;
     }

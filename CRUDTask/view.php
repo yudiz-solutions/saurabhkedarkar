@@ -23,8 +23,13 @@ $v_id = $_GET['viewid'];
     }
 
     .add {
-      padding-left: 500px;
+      padding-left: 550px;
     }
+
+    #divid{
+      width:100px;
+    }
+
   </style>
 
 </head>
@@ -38,32 +43,38 @@ $v_id = $_GET['viewid'];
       <a class="btn btn-primary my-5" href="post.php?postid=<?= $id ?>" class="text-light">Add Post</a>
     </div>
     <?php
-    $sql = "SELECT *,fname FROM post_data INNER JOIN user_add ON user_add.id = post_data.user_id  WHERE user_add.id = $id";
+    $sql = "SELECT *,profile,fname,lname FROM post_data INNER JOIN user_add ON user_add.id = post_data.user_id  WHERE user_add.id = $id";
 
     $result = mysqli_query($con, $sql);
 
 
     if ($result->num_rows > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
-
+        $profile=$row['profile'];
         $postid = $row['post_id'];
+        $lname=$row['lname'];
         $username = $row['fname'];
         $post = $row['f_post'];
         $caption = $row['caption'];
         $hashtag = $row['hashtag'];
         echo '
-              
               <div class="card" style="width:40rem;">
+              <div class="card-header bg-transparent border-success" id="head">
+              <div>
+              <img src="' . $profile . '" style=" border-radius: 80%; width: 50px; height: 50px;"> <b>' . $username .' '.$lname.'</b>
+              </div>
+              </div>
+              
               <img src="' . $post . '"class="card-img-top"  style:"width:100%"/>
               <div class="card-body">
-              <h2 class="card-title"><b>' . $username . '</b></h2>
               <h5 class="card-text">' . $hashtag . '</h5>
               <p class="card-text">' . $caption . '</p>
-              
+
+              <div class="card-footer" style:"text-align: center;">
               <a href="editpost.php?editpost=' . $postid . '&viewid=' . $id . '"class="btn btn-primary card-link"">Edit</a>
                
               <a href="deletepost.php?delpost=' . $postid . '&viewid=' . $id . '"class="btn btn-danger card-link">Delect</a>
-              
+              </div>
               
               
               </div>
