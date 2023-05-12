@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+   
+
+    <style>
+        td {
+            background-color: #E4F5D4;
+            border: 1px solid black;
+        }
+
+        table,th,td,tr {
+            font-weight: bold;
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        #myForm{
+            border: 1px solid black;
+            padding-top: 10px; 
+            /* width: 250px;
+            height: 150px;     */
+         }
+
+        
+    </style>
+</head>
+<body>
+    <!-- <button>Get Records</button>  -->
+     <div class="container">
+    <form  id="myForm" class="jumbotron text-center" >
+        <label for="title">Title:</label>
+        <input  class ="form-control" type="text" id="title" name="title"><br>
+
+        <label for="body">Body:</label>
+        <input class =" form-control" type="text" id="body" name="body"><br>
+
+        <input type="submit" class=" submit btn btn-warning" id="submit_bt"  >
+    </form>
+
+
+    <!-- <form id ="mydelete">
+         <label for ="remove"> ID to remove record :</label>
+        <input type = "text" id="remove" name ="remove">
+
+        <input type="submit" value="RemoveSub"> 
+
+    </form> -->
+
+
+
+    <table id="myTable" >
+        <tr class="alert alert-info">
+            <th class="data_id">ID</th>
+            <th class="data_title">Title</th>
+            <th class="data_body">Body</th>
+            <th >Delete Button</th>
+            <th >Update Button</th>
+
+        </tr>
+    </table>
+</div>
+    
+    <script>
+            $(document).ready(function(){
+                
+                        $.get("https://jsonplaceholder.typicode.com/posts", function(data){
+                            var getData = "";
+                            $.each(data,function(i,item){
+                                getData += '<tr id="'+item.id+'"><td  class="data_id">' + item.id + '</td><td class="data_title">' + item.title + '</td><td class="data_body">' + item.body + '</td><td><button class="btn btn-danger"  id ="del-bt" data-data-id="' + item.id + '">Delete</button></td><td><button class="btn btn-info" id ="edit-bt" data-data-id="' + item.id + '">Edit</button></td></tr>';
+                            });
+                            $('#myTable').append(getData);
+                    
+                });
+            
+        });    
+                
+
+                $("#myForm").submit(function(e){
+            e.preventDefault();
+            
+            let formData = $('#myForm').serialize();
+        
+            $.post("https://jsonplaceholder.typicode.com/posts", formData  ,
+                function(data){
+                var newRecord = '<tr id="'+ data.id +'"><td>' + data.id + '</td><td class="data_title">' + data.title + '</td><td class="data_body">' + data.body + '</td><td><button class=" btn btn-danger" id ="del-bt" data-data-id="' + data.id + '">Delete</button></td><td><button id ="edit-bt" class="btn btn-info"  data-data-id="' + data.id + '">Edit</button></td></tr>';
+                
+                $('#myTable').append(newRecord);
+                    //   console.log(data);
+                    });
+                    // $("#title").val("");
+                    // $("#body").val("");
+                    $("#myForm").trigger("reset");
+                });
+            
+        
+        
+
+        
+        $(document).on('click','#del-bt',function(){
+
+            let newRecordId = $(this).attr("data-id");
+            let recordRow = $(this).closest("tr");
+
+            $.ajax({url: "https://jsonplaceholder.typicode.com/posts/" + newRecordId,type: 'DELETE',
+                success: function(result) {
+                    recordRow.remove();
+                }
+            });
+        });
+
+       
+        $(document).on("click", "#edit-bt", function () {
+            console.log("edit");
+        let row = $(this).closest("tr");
+        let title = row.find(".data_title").text();
+        
+        let body = row.find(".data_body").text();
+        let id = row.find(".data_id").text();
+        $("#title").val(title);
+        $("#body").val(body);
+        $(".submit").text("Update");
+
+        $(document).on("click", "#submit_bt", function (e) {
+          e.preventDefault();
+          let id = row.find(".data_id").text();
+          let str = $("#myform").serialize();
+          $.ajax({
+            url: "https://jsonplaceholder.typicode.com/posts/" + id,
+            type: "PUT",
+            data: str,
+            success: function (data) {
+              row.find(".data_title").text(data.title);
+              row.find(".data_body").text(data.body);
+              console.log("data Update Suceesfully....");
+              $(".submit").text("Add");
+              $(".submit").attr("id", id);
+            },
+          });
+          $("#myform").trigger("reset");
+        });
+      });
+      
+
+    </script>
+
+
+</body>
+</html>
