@@ -1,16 +1,26 @@
 <?php 
+include 'connection.php';
 session_start();
-$message="";
-if(count($_POST)>0){
-    include 'connection.php';
-    $result = mysqli_query($con,"SELECT * FROM registerform WHERE (uname='".$_POST["uname"]."' or email='".$_POST["email"]."') and password ='".$_POST["password"]."'");
-    $row = mysqli_fetch_array($result);
-    if(is_array($row)){
-        $_SESSION["uname"]=$row['userName'];
+error_reporting(0);
+
+if (isset($_SESSION['uname'])) {
+	header("Location: UserViewForm.php");
+}
+if(isset($_POST['submit'])){
+    
+    $uname=$_POST['uname_or_email'];
+    $password=$_POST['password'];
+   
+    $sql="SELECT * FROM `registerform` WHERE (uname= '$uname' or email='$uname') AND password= '$password'";
+    $result = mysqli_query($con, $sql);
+    if($result->num_rows >0){
+    $row = mysqli_fetch_assoc($result);
+
+        $_SESSION['uname']=$row['uname'];
 
         header("location: UserViewForm.php");
     }else{
-        $message="Invalid Useid or email or password";
+        echo"<script>alert('Invalid Useid or email or password')</script>";
     }
 }
 ?>
@@ -139,16 +149,16 @@ if(count($_POST)>0){
         <div class="text-center mt-4 name">
             Welcome
         </div>
-        <form class="p-3 mt-3">
+        <form class="p-3 mt-3" method="POST">
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
-                <input type="text" name="userName" id="userName" placeholder="Username">
+                <input type="text" name="uname_or_email" id="userName" placeholder="Username">
             </div>
             <div class="form-field d-flex align-items-center">
                 <span class="fas fa-key"></span>
                 <input type="password" name="password" id="pwd" placeholder="Password">
             </div>
-            <button class="btn mt-3">Login</button>
+            <button class="btn mt-3" name="submit">Login</button>
         </form>
         <div class="text-center fs-6">
             <a href="#">Forget password?</a> or <a href="RegisterForm.php">Sign up</a>

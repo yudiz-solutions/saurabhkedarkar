@@ -1,7 +1,49 @@
-<?php
+<?php 
 include "connection.php";
-include "userphp.php"
-    ?>
+
+    isset($_GET['editid']);
+     $id=$_GET['editid'];
+   
+    $sql="SELECT * FROM `registerform` WHERE registerform.id=$id"; 
+    $result=mysqli_query($con,$sql);
+    $row=mysqli_fetch_assoc($result);
+   
+    $fname = $row["fname"];
+    $uname = $row["uname"];
+    $lname = $row["lname"];
+    $email = $row["email"];
+    $password = $row["password"];
+    $cpassword = $row["confpassword"];
+    $DOB = $row["dob"];
+    $hobby = $row["hobby"];
+    $gender = $row["gender"];
+    $country = $row["country"];
+    $massage = $row["massage"];
+    $profile = $row["profile"];
+
+    if(isset($_POST["update"])){
+        $fname = $_POST["fname"];
+        $uname = $_POST["uname"];
+        $lname = $_POST["lname"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $cpassword = $_POST["confpassword"];
+        $DOB = $_POST["dob"];
+        $hobby = $_POST["hobby"];
+        $gender = $_POST["gender"];
+        $country = $_POST["country"];
+        $massage = $_POST["massage"];
+        $profile = $_POST["profile"];
+
+        $sql="UPDATE `registerform` SET `fname` = '$fname', `uname` = '$uname ', `lname` = '$lname', `email` = '$email', `password` = '$password', `confpassword` = '$cpassword', `dob` = '$DOB', `hobby` = '$hobby ', `gender` = '$gender', `country` = '$country', `massage` = '$massage', `profile` = '$profile' WHERE `registerform`.`id` = $id";
+
+        $result=mysqli_query($con,$sql);
+        if($result){
+            echo"hello";
+        }
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +69,7 @@ include "userphp.php"
 
         }
     </style>
-
+  
 </head>
 
 <body>
@@ -37,49 +79,43 @@ include "userphp.php"
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">First Name</label>
                  <div class="col-md-3">
-                <span class="errorColor">*<?php echo $error['fname'] ??'';?></span>
-                    <input type="text" class="form-control" name="fname">
+                    <input type="text" class="form-control" name="fname" value=<?php echo $fname; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">User Name</label>
                 <div class="col-md-3">
-                <span class="errorColor">*<?php echo $error['uname'] ??'';?></span>
-                    <input type="text" class="form-control" name="uname">
+                    <input type="text" class="form-control" name="uname" value=<?php echo $uname; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Last Name</label>
                 <div class="col-md-3">
-                <span class="errorColor">*<?php echo $error['lname'] ??'';?></span>
-                    <input type="text" class="form-control" name="lname">
+                    <input type="text" class="form-control" name="lname" value=<?php echo $lname; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Email</label>
                 <div class="col-md-3">
-                <span class="errorColor">*<?php echo $error['email'] ??'';?></span>
-                    <input type="text" class="form-control" name="email">
+                    <input type="text" class="form-control" name="email" value=<?php echo $email; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Password</label>
                 <div class="col-md-3">
-                <span class="errorColor">*<?php echo $error['password'] ??'';?></span>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" value=<?php echo $password; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Confirm Password</label>
                 <div class="col-md-3">
-                <span class="errorColor">*<?php echo $error['cpassword'] ??'';?></span>
-                    <input type="password" class="form-control" name="cpassword">
+                    <input type="password" class="form-control" name="cpassword" value=<?php echo $cpassword; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Date Of Birth</label>
                 <div class="col-md-3">
-                    <input type="date" class="form-control" name="DOB">
+                    <input type="text" class="form-control" name="DOB" value=<?php echo $DOB; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
@@ -124,23 +160,11 @@ include "userphp.php"
                 </div>
             </div><br>
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-success" onclick="submitForm();" name="submit">Submit</button>
+                <button type="submit" class="btn btn-outline-success" name="update">Update</button>
             </div>
         </form>
     </div>
     
 </body>
-<script>
-     function submitForm(){
-            $.ajax({
-                metho: "POST", 
-                url: "userphp.php", 
-                data: $(this).serialize(), 
-                success: function () {
-                    
-                }
-            })
-        }
-    
 
 </html>

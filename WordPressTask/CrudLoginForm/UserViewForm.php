@@ -1,5 +1,11 @@
-<?php
-include "connection.php";
+<?php 
+include 'connection.php';
+session_start();
+// error_reporting(0);
+
+if (!isset($_SESSION['uname'])) {
+	header("Location: loginForm.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +56,7 @@ include "connection.php";
                if($result){
                 while($row = mysqli_fetch_assoc($result)){
                     $num++;
+                $id=$row["id"];
                 $fname = $row["fname"];
                 $uname = $row["uname"];
                 $lname = $row["lname"];
@@ -72,8 +79,8 @@ include "connection.php";
                 <td>'.$country.'</td>
                 <td><img src="'.$profile.'"width=100 height=120></td>
                 <td>
-                <a class="btn btn-primary" href="edit.php" class="text-light" >Edit</a>
-                <a class="btn btn-danger" href="delete.php" class="text-light">Delete</a>
+                <a class="btn btn-primary" href="Editphp.php?editid='.$id.'" class="text-light" >Edit</a>
+                <a class="btn btn-danger" href="Delete.php?deleteid='.$id.'" class="text-light">Delete</a>
                </td>
                ' ;
                 }
@@ -81,8 +88,10 @@ include "connection.php";
                 ?>
 
             </tbody>
-
+     <a class="btn btn-danger" href="logout.php">LogOut</a>
     </div>
+    
+
 </body>
 
 </html>
