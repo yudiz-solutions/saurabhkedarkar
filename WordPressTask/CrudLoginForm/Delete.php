@@ -17,19 +17,46 @@ if(isset($_GET['deleteid'])){
 
 
 
-<script>
-        $(document).on('submit', '#RegisterForm', function (e) {
-            e.preventDefault();
+<script type="text/javascript">
+        $(document).on('submit','#RegisterForm'.function(e){
+            
+                e.preventDefault();
             $.ajax({
-                metho: "POST", 
-                url: "userphp.php", 
-                data: $(this).serialize(), 
-                success: function () {
-                    $('#RegisterForm').find('input').val('')
+                method:"POST",
+                url:"userphp.php",
+                data:$('this').serialize(),
+                success:function(data){
+                    $('#RegisterForm').find('input').val('');
+                },
+                error:function(){
+                    alert('error');
                 }
-            })
-        })
+            });
+        });
+    
     </script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $('#RegisterForm').submit(function(e){
+   e.preventDefault();
+   $.ajax({
+       type:"POST",
+       url:"userphp.php",
+       data:$(this).serialize(),
+       success:function(data){
+           $('#postData').html("You data will be saved");
+           
+
+       },
+       error:function(){
+           alert("form submission failed !");
+       }
+   });
+  });
+});
+</script>
    
 
     

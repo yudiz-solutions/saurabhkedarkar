@@ -34,7 +34,7 @@ if (!isset($_SESSION['uname'])) {
 
 <body>
     <div class="container">
-        <table class="table">
+        <table class="table" id="TableForm">
             <thead>
                 <tr class="alert alert-info">
                     <th scope="col">Sl no</th>
@@ -80,7 +80,7 @@ if (!isset($_SESSION['uname'])) {
                 <td><img src="'.$profile.'"width=100 height=120></td>
                 <td>
                 <a class="btn btn-primary" href="Editphp.php?editid='.$id.'" class="text-light" >Edit</a>
-                <a class="btn btn-danger" href="Delete.php?deleteid='.$id.'" class="text-light">Delete</a>
+                <a class="btn btn-danger" href="Delete.php?deleteid='.$id.'" class="text-light" value="delete">Delete</a>
                </td>
                ' ;
                 }
@@ -88,9 +88,10 @@ if (!isset($_SESSION['uname'])) {
                 ?>
 
             </tbody>
+
+        </table>
      <a class="btn btn-danger" href="logout.php">LogOut</a>
     </div>
-    
 
 </body>
 

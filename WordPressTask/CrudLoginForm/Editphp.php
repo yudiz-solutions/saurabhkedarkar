@@ -1,6 +1,6 @@
 <?php 
 include "connection.php";
-
+error_reporting(0);
     isset($_GET['editid']);
      $id=$_GET['editid'];
    
@@ -39,7 +39,7 @@ include "connection.php";
 
         $result=mysqli_query($con,$sql);
         if($result){
-            echo"hello";
+            header('location:UserViewForm.php');
         }
     }
 
@@ -54,7 +54,7 @@ include "connection.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Registation Form</title>
+    <title>Edit Form</title>
     <style>
         .errorColor{
              color:#FF0000;
@@ -74,7 +74,7 @@ include "connection.php";
 
 <body>
     <div class="container my-5">
-        <h2>Registation Form</h2>
+        <h2>Edit Form</h2>
         <form id="RegisterForm" method="post" enctype="multipart/form-data">
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">First Name</label>
@@ -121,7 +121,7 @@ include "connection.php";
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Hobby</label>
                 <div class="col-md-3">
-                    <input type="checkbox" name="hobby[]" value="cricket">cricket<br>
+                    <input type="checkbox" name="hobby[]" value="cricket">cricket <br>
                     <input type="checkbox" name="hobby[]" value="Gardening">Gardening<br>
                     <input type="checkbox" name="hobby[]" value="Photography">Photography<br>
                     <input type="checkbox" name="hobby[]" value="Painting">Painting<br>
@@ -132,31 +132,31 @@ include "connection.php";
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Gender</label>
                 <div class="col-md-3">
-                    <input type="radio" name="gender" value="male">Male
-                    <input type="radio" name="gender" value="female">Female
-                    <input type="radio" name="gender" value="other">Other
+                    <input type="radio" name="gender" value="male"<?php if ($gender == "male") {echo "checked"; } ?>>Male
+                    <input type="radio" name="gender" value="female"<?php if ($gender == "female") {echo "checked"; } ?>>Female
+                    <input type="radio" name="gender" value="other"<?php if ($gender == "other") {echo "checked"; } ?>>Other
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Country</label>
                 <select class="col-md-3" name="country">
                     <option value="">Select Country</option>
-                    <option value="india">India</option>
-                    <option value="united states">United States</option>
-                    <option value="australia">Australia</option>
-                    <option value="canada">Canada</option>
+                    <option value="india"<?php if($country=="india"){echo "selected";}?>>India</option>
+                    <option value="united states"<?php if($country=="united states"){echo "selected";}?>>United States</option>
+                    <option value="australia"<?php if($country=="australia"){echo "selected";}?>>Australia</option>
+                    <option value="canada"<?php if($country=="canada"){echo "selected";}?>>Canada</option>
                 </select>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Message</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" name="massage">
+                    <input type="text" class="form-control" name="massage" value="<?php echo $massage;?>">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Profile</label>
                 <div class="col-md-3">
-                    <input type="file" class="form-control" name="profile">
+                    <input type="file" class="form-control" name="profile" value=""><?php echo $profile;?>
                 </div>
             </div><br>
             <div class="text-center">
