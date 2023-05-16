@@ -1,8 +1,7 @@
 <?php
 include "connection.php";
-session_start();
-
-?>
+// include "userphp.php"
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +14,7 @@ session_start();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Registation Form</title>
     <style>
-        .errorColor {
+        .error {
             color: #FF0000;
         }
 
@@ -34,75 +33,60 @@ session_start();
 <body>
     <div class="container my-5">
         <h2>Registation Form</h2>
-        <form id="RegisterForm" method="post" enctype="multipart/form-data">
+        <form id="RegisterForm" method="post" enctype="multipart/form-data" data-toggle="validator">
+        <div class="alert alert-danger display-error" style="display: none">
+         </div>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">First Name</label>
                 <div class="col-md-3">
-                    <span class="errorColor">*
-                        <?php echo $error['fname'] ?? ''; ?>
-                    </span>
-                    <input type="text" class="form-control" name="fname" id="fname">
-                    <span id="fname_error"></span>
+                    <span class="error fname">*</span>
+                    <input type="text" id="fname" class="form-control" name="fname">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">User Name</label>
                 <div class="col-md-3">
-                    <span class="errorColor">*
-                        <?php echo $error['uname'] ?? ''; ?>
-                    </span>
-                    <input type="text" class="form-control" name="uname" id="uname">
+                    <span class="error uname">*</span>
+                    <input type="text" class="form-control" id="uname" name="uname">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Last Name</label>
                 <div class="col-md-3">
-                    <span class="errorColor">*
-                        <?php echo $error['lname'] ?? ''; ?>
-                    </span>
-                    <input type="text" class="form-control" name="lname" id="lname">
+                    <span class="error lname">*</span>
+                    <input type="text" id="lname" class="form-control" name="lname">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Email</label>
                 <div class="col-md-3">
-                    <span class="text-danger">*
-                        <?php
-                            if(isset($_SESSION['email'])){
-                                echo $_SESSION['email'];
-                            }
-                         ?>
-                    </span>
-                    <input type="text" class="form-control" name="email" id="email">
+                    <span class="error email">*</span>
+                    <input type="text" id="email" class="form-control" name="email">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Password</label>
                 <div class="col-md-3">
-                    <span class="errorColor">*
-                        <?php echo $error['password'] ?? ''; ?>
-                    </span>
-                    <input type="password" class="form-control" name="password" id="password">
+                    <span class="error password">*</span>
+                    <input type="password" id="password" class="form-control" name="password">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Confirm Password</label>
                 <div class="col-md-3">
-                    <span class="errorColor">*
-                        <?php echo $error['cpassword'] ?? ''; ?>
-                    </span>
-                    <input type="password" class="form-control" name="cpassword" id="cpassword">
+                   <span class="error cpassword">*</span>
+                   <input type="password" class="form-control" name="cpassword">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Date Of Birth</label>
                 <div class="col-md-3">
-                    <input type="date" class="form-control" name="DOB" id="DOB">
+                    <input type="date" class="form-control" name="DOB">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Hobby</label>
-                <div class="col-md-3" id="hobby">
+                <div class="col-md-3">
                     <input type="checkbox" name="hobby[]" value="cricket">cricket<br>
                     <input type="checkbox" name="hobby[]" value="Gardening">Gardening<br>
                     <input type="checkbox" name="hobby[]" value="Photography">Photography<br>
@@ -113,7 +97,7 @@ session_start();
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Gender</label>
-                <div class="col-md-3" id="gender">
+                <div class="col-md-3">
                     <input type="radio" name="gender" value="male">Male
                     <input type="radio" name="gender" value="female">Female
                     <input type="radio" name="gender" value="other">Other
@@ -121,7 +105,7 @@ session_start();
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Country</label>
-                <select class="col-md-3" name="country" id="country">
+                <select class="col-md-3" name="country">
                     <option value="">Select Country</option>
                     <option value="india">India</option>
                     <option value="united states">United States</option>
@@ -132,52 +116,74 @@ session_start();
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Message</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" name="massage" id="massage">
+                    <input type="text" class="form-control" name="massage">
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Profile</label>
                 <div class="col-md-3">
-                    <input type="file" class="form-control" name="profile" id="profile">
+                    <input type="file" class="form-control" name="profile">
                 </div>
             </div><br>
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-success" name="submit" value="submit">Submit</button>
+                <button type="submit" id="submit" class="btn btn-outline-success" name="submit"
+                    value="submit">Submit</button>
             </div>
-        </form>
+            <div id="msg">
 
+            </div>
+
+        </form>
     </div>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $('#RegisterForm').submit(function (e) {
+            $(document).on("submit",'#RegisterForm',function(e){
+            //$('#RegisterForm').click(function (e) {
                 e.preventDefault();
-                // var fname = $("#fname").value;
-                // if(fname=""){
-                //     alert"name is require";
-                // }
+                
+            //  var firstname = $("#fname").val();
+                // var username = $("#uname").val();
+                // var lastname = $("#lname").val();
+                // var email = $("#email").val();
+                // var password = $("#password").val();
+                // var confirm_password = $("#cpassword").val();
+
+                // if(firstname=""||username=""||lastname=""||email=""||password=""||confirm_password=""){
+            //         if(firstname=""){
+            //         alert("Please fill all the Field");
+            //     }
+            // })
 
                 $.ajax({
-                    url: "userphp.php",
                     method: "POST",
+                    url: "userphp.php",
+                    dataType:"json",
                     data: $(this).serialize(),
-                    success: function (response) {
-                        console.log(response);
-                        if(response.email !== ''){
-                            $('#fname_error').text(response.fname);
+                    success: function (data) {
+                        if (data.status == true){
+                            // alert("Success: " +data);
+                        } else {
+                            console.log(data)
+                            
+                            $("span.fname").text(data.error.uname);
+                            $("span.uname").html(data.error.uname);
+                            $("span.lname").html(data.error.lname);
+                            $("span.email").html(data.error.email);
+                            $("span.password").html(data.error.password);
+                            $("span.cpassword").html(data.error.cpassword);
+
+                            // $(".display-error").html("<ul>"+data+"</ul>");
+                            // $(".display-error").css("display","block");
                         }
-                         // $('#postData').html("You data will be saved");
-                         
-                         
-                        //  $("#RegisterForm").trigger("reset");
-                        },
-                    error: function () {
-                        alert("form submission failed !");
-                    }
-                });
+            },
+            });
             });
         });
     </script>
+
 </body>
+
 
 </html>

@@ -6,6 +6,26 @@ session_start();
 if (!isset($_SESSION['uname'])) {
 	header("Location: loginForm.php");
 }
+
+
+$searchErr = '';
+$searchData='';
+if(isset($_POST['save']))
+{
+    if(!empty($_POST['search']))
+    {
+        $search = $_POST['search'];
+        $sqlSearch ="SELECT * FROM registerform WHERE uname like '%$search%' or fname like '%$search%'";
+        $resultSearch = mysqli_query($con, $sqlSearch);
+    }
+    else
+    {
+        $searchErr = "Please enter the information";
+    }
+    
+}
+
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +53,26 @@ if (!isset($_SESSION['uname'])) {
 </head>
 
 <body>
+   <div class="container">
+       <form class="form-horizontal" action="#" method="post">
+       <div class="row">
+       <div class="form-group">
+            <label class="control-label col-sm-4" for="email"><b>Search  Record Information:</b>:</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="search" placeholder="search here">
+            </div>
+            <div class="col-sm-2">
+              <button type="submit" name="save" class="btn btn-success btn-sm">Submit</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="error" style="color:red;">* <?php echo $searchErr;?></span>
+        </div>
+      </div>
+      </form>   
+
+   </div>
+
     <div class="container">
         <table class="table" id="TableForm">
             <thead>
@@ -47,8 +87,43 @@ if (!isset($_SESSION['uname'])) {
                     <th scope="col">Opration</th>
                  </tr>
             </thead>
+
             <tbody>
+                
                 <?php
+               
+                    $num=0;
+
+
+                    while($searchRow = mysqli_fetch_assoc($resultSearch)){
+                      
+                     //foreach($searchData as $searchRow){
+                        $num ++;
+                        echo'<tr>
+                             <th scope="row" >'.$num.' </th>
+                            <th scope="row" >'.$searchRow["fname"].' </th>
+                            <th scope="row" >'.$searchRow["uname"].' </th>
+                            <th scope="row" >'.$searchRow["lname"].' </th>
+                            <th scope="row" >'.$searchRow["email"].' </th>
+                            <th scope="row" >'.$searchRow["password"].' </th>
+                            <th scope="row" >'.isset($searchRow["cpassword"]).' </th>
+                            <th scope="row" >'.$searchRow["dob"].' </th>
+                            <th scope="row" >'.$searchRow["hobby"].' </th>
+                            <th scope="row" >'.$searchRow["gender"].' </th>
+                            <th scope="row" >'.$searchRow["country"].' </th>
+                            <th scope="row" >'.$searchRow["massage"].' </th>
+                            <th scope="row" >'.$searchRow["profile"].' </th>
+                            <td>
+                             <a class="btn btn-primary" href="Editphp.php?editid='.$id.'" class="text-light" >Edit</a>
+                             <a class="btn btn-danger" href="Delete.php?deleteid='.$id.'" class="text-light" value="delete">Delete</a>
+                            </td>
+
+                        </tr>';
+                        exit();
+
+                     }
+
+                
                 $sql = "SELECT * FROM registerform";
 
                 $result = mysqli_query($con, $sql);
@@ -82,6 +157,7 @@ if (!isset($_SESSION['uname'])) {
                 <a class="btn btn-primary" href="Editphp.php?editid='.$id.'" class="text-light" >Edit</a>
                 <a class="btn btn-danger" href="Delete.php?deleteid='.$id.'" class="text-light" value="delete">Delete</a>
                </td>
+               </tr>
                ' ;
                 }
             }
