@@ -27,20 +27,24 @@ include "connection.php";
 
         }
     </style>
+    <!-- <script src="clientValidation.js"></script> -->
 
 </head>
 
 <body>
     <div class="container my-5">
         <h2>Registation Form</h2>
-        <form id="RegisterForm" method="post" enctype="multipart/form-data" data-toggle="validator">
+        <form enctype="multipart/form-data" id="RegisterForm" method="post"  data-toggle="validator">
         <div class="alert alert-danger display-error" style="display: none">
          </div>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">First Name</label>
                 <div class="col-md-3">
                     <span class="error fname">*</span>
-                    <input type="text" id="fname" class="form-control" name="fname">
+                    <div >
+                    <input type="text" id="fname" class="form-control firstname" name="fname" >
+                    <span class="firstname"></span>
+                    </div>
                 </div>
             </div><br>
             <div class="form-group row">
@@ -48,6 +52,7 @@ include "connection.php";
                 <div class="col-md-3">
                     <span class="error uname">*</span>
                     <input type="text" class="form-control" id="uname" name="uname">
+                    <span class="username"></span>
                 </div>
             </div><br>
             <div class="form-group row">
@@ -55,6 +60,7 @@ include "connection.php";
                 <div class="col-md-3">
                     <span class="error lname">*</span>
                     <input type="text" id="lname" class="form-control" name="lname">
+                    <span class="lastname"></span>
                 </div>
             </div><br>
             <div class="form-group row">
@@ -62,6 +68,7 @@ include "connection.php";
                 <div class="col-md-3">
                     <span class="error email">*</span>
                     <input type="text" id="email" class="form-control" name="email">
+                    <span class="useremail"></span>
                 </div>
             </div><br>
             <div class="form-group row">
@@ -122,13 +129,18 @@ include "connection.php";
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Profile</label>
                 <div class="col-md-3">
-                    <input type="file" class="form-control" name="profile">
+                    <input type="file" class="form-control" id="profile" name="profile">
                 </div>
             </div><br>
             <div class="text-center">
                 <button type="submit" id="submit" class="btn btn-outline-success" name="submit"
                     value="submit">Submit</button>
+                    <a  type="button"  class="btn btn-primary" name="GoToLogin"
+                        value="GoToLogin" href="index.php" class="text-light">GoToLogin</a>
             </div>
+           
+           
+            
             <div id="msg">
 
             </div>
@@ -155,14 +167,36 @@ include "connection.php";
             //         alert("Please fill all the Field");
             //     }
             // })
+             var formData = new FormData(this);
+            // formData.append("fname",fname);
+            // formData.append("uname",uname);
+            // formData.append("lname",lname);
+            // formData.append("email",email);
+            // formData.append("password",password);
+            // formData.append("cpassword",cpassword);
+            // formData.append("dob",dob);
+            // formData.append("hobby",hobby);
+            // formData.append("gender",gender);
+            // formData.append("country",country);
+            // formData.append("massage",massage);
+
+
+            //    var profile =$("#profile")[0].files[0];
+            //    formData.append("profile",profile);
 
                 $.ajax({
                     method: "POST",
                     url: "userphp.php",
                     dataType:"json",
-                    data: $(this).serialize(),
+                    processData:false,
+                    contentType:false,
+                    data:formData,   //+ '&=formData' + formData,
                     success: function (data) {
+                        console.log(data);
+                        
                         if (data.status == true){
+
+                            $("#RegisterForm").trigger('reset');
                             // alert("Success: " +data);
                         } else {
                             console.log(data)

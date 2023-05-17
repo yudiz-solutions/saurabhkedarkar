@@ -65,7 +65,7 @@ $resultSearch = mysqli_query($con, $sqlSearch);
               <input type="text" class="form-control" name="search" placeholder="search here" value="<?php echo isset($_POST['search']) ? $_POST['search'] : '' ?>">
             </div>
             <div class="col-sm-2">
-              <button type="submit" name="save" class="btn btn-success btn-sm">search</button>
+              <button type="submit" name="save" class="btn btn-success btn-sm">Submit</button>
             </div>
         </div>
         <div class="form-group">

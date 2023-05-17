@@ -18,6 +18,7 @@ if(isset($_POST['submit'])){
    
     if (empty($errors)) {
         $sql="SELECT * FROM `registerform` WHERE (uname= '$uname' or email='$uname') AND password= '$password'";
+
         $result = mysqli_query($con, $sql);
         if($result->num_rows >0){
         $row = mysqli_fetch_assoc($result);
