@@ -1,5 +1,7 @@
 <?php 
 include "connection.php";
+
+
 error_reporting(0);
     isset($_GET['editid']);
      $id=$_GET['editid'];
@@ -15,11 +17,13 @@ error_reporting(0);
     $password = $row["password"];
     $cpassword = $row["confpassword"];
     $DOB = $row["dob"];
-    $hobby = $row["hobby"];
+    $hobby = explode(',',$row["hobby"]);
     $gender = $row["gender"];
     $country = $row["country"];
     $massage = $row["massage"];
     $profile = $row["profile"];
+
+   
 
     if(isset($_POST["update"])){
         $fname = $_POST["fname"];
@@ -29,14 +33,28 @@ error_reporting(0);
         $password = $_POST["password"];
         $cpassword = $_POST["confpassword"];
         $DOB = $_POST["dob"];
-        $hobby = $_POST["hobby"];
+        $hobby = implode(",", $_POST["hobby"]);
         $gender = $_POST["gender"];
         $country = $_POST["country"];
         $massage = $_POST["massage"];
-        $profile = $_POST["profile"];
+        // $folder = $_POST["profile"];
 
-        $sql="UPDATE `registerform` SET `fname` = '$fname', `uname` = '$uname ', `lname` = '$lname', `email` = '$email', `password` = '$password', `confpassword` = '$cpassword', `dob` = '$DOB', `hobby` = '$hobby ', `gender` = '$gender', `country` = '$country', `massage` = '$massage', `profile` = '$profile' WHERE `registerform`.`id` = $id";
+        $profile = isset($_FILES["profile"]["name"]) ? $_FILES["profile"]["name"] : '';
+        $profile_tmp = isset($_FILES["profile"]["tmp_name"]) ? $_FILES["profile"]["tmp_name"] : '';
+        $folder = "./image/" . $profile;
 
+
+
+        if(!empty($_FILES["profile"]["tmp_name"])){
+            move_uploaded_file($profile_tmp, $folder);
+        }else{
+            $folder = isset($_POST['hidden_file']) ? $_POST['hidden_file'] : '';
+        }
+
+       
+        $sql="UPDATE `registerform` SET `fname` = '$fname', `uname` = '$uname ', `lname` = '$lname', `email` = '$email', `password` = '$password', `confpassword` = '$cpassword', `dob` = '$DOB', `hobby` = '$hobby ', `gender` = '$gender', `country` = '$country', `massage` = '$massage', `profile` = '$folder' WHERE `registerform`.`id` = $id";
+
+        
         $result=mysqli_query($con,$sql);
         if($result){
             header('location:UserViewForm.php');
@@ -115,18 +133,19 @@ error_reporting(0);
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Date Of Birth</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" name="DOB" value=<?php echo $DOB; ?>>
+                    <input type="date" class="form-control" name="DOB" value=<?php echo $DOB; ?>>
                 </div>
             </div><br>
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Hobby</label>
                 <div class="col-md-3">
-                    <input type="checkbox" name="hobby[]" value="cricket">cricket <br>
-                    <input type="checkbox" name="hobby[]" value="Gardening">Gardening<br>
-                    <input type="checkbox" name="hobby[]" value="Photography">Photography<br>
-                    <input type="checkbox" name="hobby[]" value="Painting">Painting<br>
-                    <input type="checkbox" name="hobby[]" value="Fishing">Fishing<br>
-                    <input type="checkbox" name="hobby[]" value="Dance">Dance<br>
+                    
+                    <input type="checkbox" name="hobby[]" value="cricket"<?php echo in_array("cricket",$hobby) ?'checked="checked"':''?>>cricket <br>
+                    <input type="checkbox" name="hobby[]" value="Gardening"<?php echo in_array("Gardening",$hobby) ?'checked="checked"':''?>>Gardening<br>
+                    <input type="checkbox" name="hobby[]" value="Photography"<?php echo in_array("Photography",$hobby) ?'checked="checked"':''?>>Photography<br>
+                    <input type="checkbox" name="hobby[]" value="Painting"<?php echo in_array("Painting",$hobby) ?'checked="checked"':''?>>Painting<br>
+                    <input type="checkbox" name="hobby[]" value="Fishing"<?php echo in_array("Fishing",$hobby) ?'checked="checked"':''?>>Fishing<br>
+                    <input type="checkbox" name="hobby[]" value="Dance"<?php echo in_array("Dance",$hobby) ?'checked="checked"':''?>>Dance<br>
                 </div>
             </div><br>
             <div class="form-group row">
@@ -156,8 +175,11 @@ error_reporting(0);
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">Profile</label>
                 <div class="col-md-3">
-                    <input type="file" class="form-control" name="profile" value=""><?php echo $profile;?>
+                    <input type="file" class="form-control" name="profile" value="">
+                    <input type="hidden" name="hidden_file" value="<?php echo $profile; ?>">
+                    
                 </div>
+
             </div><br>
             <div class="text-center">
                 <button type="submit" class="btn btn-outline-success" name="update">Update</button>

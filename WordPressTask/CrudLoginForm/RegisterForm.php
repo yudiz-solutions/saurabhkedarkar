@@ -12,6 +12,10 @@ include "connection.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
+
     <title>Registation Form</title>
     <style>
         .error {
@@ -135,8 +139,6 @@ include "connection.php";
             <div class="text-center">
                 <button type="submit" id="submit" class="btn btn-outline-success" name="submit"
                     value="submit">Submit</button>
-                    <a  type="button"  class="btn btn-primary" name="GoToLogin"
-                        value="GoToLogin" href="index.php" class="text-light">GoToLogin</a>
             </div>
            
            
@@ -152,37 +154,10 @@ include "connection.php";
 
         $(document).ready(function () {
             $(document).on("submit",'#RegisterForm',function(e){
-            //$('#RegisterForm').click(function (e) {
                 e.preventDefault();
                 
-            //  var firstname = $("#fname").val();
-                // var username = $("#uname").val();
-                // var lastname = $("#lname").val();
-                // var email = $("#email").val();
-                // var password = $("#password").val();
-                // var confirm_password = $("#cpassword").val();
-
-                // if(firstname=""||username=""||lastname=""||email=""||password=""||confirm_password=""){
-            //         if(firstname=""){
-            //         alert("Please fill all the Field");
-            //     }
-            // })
              var formData = new FormData(this);
-            // formData.append("fname",fname);
-            // formData.append("uname",uname);
-            // formData.append("lname",lname);
-            // formData.append("email",email);
-            // formData.append("password",password);
-            // formData.append("cpassword",cpassword);
-            // formData.append("dob",dob);
-            // formData.append("hobby",hobby);
-            // formData.append("gender",gender);
-            // formData.append("country",country);
-            // formData.append("massage",massage);
-
-
-            //    var profile =$("#profile")[0].files[0];
-            //    formData.append("profile",profile);
+            
 
                 $.ajax({
                     method: "POST",
@@ -195,13 +170,14 @@ include "connection.php";
                         console.log(data);
                         
                         if (data.status == true){
-
-                            $("#RegisterForm").trigger('reset');
-                            // alert("Success: " +data);
+                             $("#RegisterForm").trigger('reset');
+                             // alert("Submited succeefully")
+                             window.location.href = 'index.php'
+                             swal("Submited!", "Your imaginary file has been Submited.", "success");
                         } else {
                             console.log(data)
                             
-                            $("span.fname").text(data.error.uname);
+                            $("span.fname").text(data.error.fname);
                             $("span.uname").html(data.error.uname);
                             $("span.lname").html(data.error.lname);
                             $("span.email").html(data.error.email);

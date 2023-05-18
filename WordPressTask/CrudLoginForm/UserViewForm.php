@@ -18,7 +18,7 @@ if(isset($_POST['save']))
     if(!empty($_POST['search']))
     {
         $search = $_POST['search'];
-        $sqlSearch ="SELECT * FROM registerform WHERE uname like '%$search%' or fname like '%$search%'";
+        $sqlSearch ="SELECT * FROM registerform WHERE uname like '%$search%' or fname like '%$search%' or email like '%$search%' or lname like '%$search%'";
         $resultSearch = mysqli_query($con, $sqlSearch);
     }
     else
@@ -41,6 +41,9 @@ $resultSearch = mysqli_query($con, $sqlSearch);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
     <style>
         table {
            font-weight: bold;
@@ -129,24 +132,31 @@ $resultSearch = mysqli_query($con, $sqlSearch);
   
     $(document).on("click",".remove",function(){
         var id = $(this).parents("tr").attr("id");
+         Swal.fire({
+	        icon: 'warning',
+  	        title: 'Are you sure you want to delete this record?',
+  	        showDenyButton: false,
+  	        showCancelButton: true,
+  	        confirmButtonText: 'Yes'
+           }).then((result) => {
 
-
-        if(confirm('Are you sure to remove this record ?'))
+        if(result.isConfirmed)
         {
             $.ajax({
                url: 'Delete.php',
                type: 'GET',
                data: {id: id},
                error: function() {
-                  alert('Something is wrong');
+                   swal("Cancelled", "Your imaginary file is safe :)", "error");
                },
                success: function(data) {
                     $("#"+id).remove();
-                    alert("Record removed successfully");  
+                    swal("Deleted!", "Your imaginary file has been deleted.", "success"); 
                }
             });
         }
     });
+});
 
 
 

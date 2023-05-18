@@ -1,7 +1,5 @@
 <?php 
 include "connection.php";
-
-
 error_reporting(0);
     isset($_GET['editid']);
      $id=$_GET['editid'];
@@ -35,12 +33,21 @@ error_reporting(0);
         $gender = $_POST["gender"];
         $country = $_POST["country"];
         $massage = $_POST["massage"];
-        $folder = $_POST["profile"];
 
-       
+
+        $profile = isset($_FILES["profile"]["name"])?$_FILES["profile"]["name"] :'';
+        $profile_temp=isset($_FILES["profile"]["tmp_name"]) ? $_FILES["profile"]["tmp_name"] :'';
+        $folder="./image/".$profile;
+        die($folder);
+
+        if(!empty($_FILES["profile"]["tmp_name"])){
+            move_uploaded_file($profile_temp,$folder);
+        }else{
+            $folder=isset($_POST["hidden_file"]) ? $_FILES["hidden_file"] :'';
+        }
+
         $sql="UPDATE `registerform` SET `fname` = '$fname', `uname` = '$uname ', `lname` = '$lname', `email` = '$email', `password` = '$password', `confpassword` = '$cpassword', `dob` = '$DOB', `hobby` = '$hobby ', `gender` = '$gender', `country` = '$country', `massage` = '$massage', `profile` = '$profile' WHERE `registerform`.`id` = $id";
 
-        
         $result=mysqli_query($con,$sql);
         if($result){
             header('location:UserViewForm.php');
@@ -162,7 +169,7 @@ error_reporting(0);
                 <label class="col-md-2 col-form-label text-md-right">Profile</label>
                 <div class="col-md-3">
                     <input type="file" class="form-control" name="profile" value="">
-                    
+                    <input type="hidden" name="hidden_file" value="<?php echo $profile?>">
                 </div>
 
             </div><br>

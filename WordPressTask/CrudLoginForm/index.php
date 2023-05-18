@@ -15,6 +15,10 @@ if(isset($_POST['submit'])){
     if (!isset($uname) || $uname == "") {
         $errors["usern"] = "Please enter name";
     }
+
+    if(!isset($password) || $password ==""){
+        $errors["password"] = "Please enter password";
+    }
    
     if (empty($errors)) {
         $sql="SELECT * FROM `registerform` WHERE (uname= '$uname' or email='$uname') AND password= '$password'";
@@ -22,13 +26,17 @@ if(isset($_POST['submit'])){
         $result = mysqli_query($con, $sql);
         if($result->num_rows >0){
         $row = mysqli_fetch_assoc($result);
+         
+        $_SESSION['uname']=$row['uname'];
+        
+        header("location: UserViewForm.php");
+        
     
-            $_SESSION['uname']=$row['uname'];
-    
-            header("location: UserViewForm.php");
+        // echo"<script>alert('Invalid Useid or email or password')</script>";
+       
         }else{
-            // echo"<script>alert('Invalid Useid or email or password')</script>";
             $errors["nouser"] = "No user found";
+
         }
     }
 }
@@ -175,12 +183,21 @@ if(isset($_POST['submit'])){
             
             <div class="form-field d-flex align-items-center">
                 <span class="fas fa-key"></span>
+                <span class="error password"></span>
                 <input type="password" name="password" id="pwd" placeholder="Password">
             </div>
+            <?php 
+                if (isset($errors["password"])) {
+                    echo '<span class="error password">'.$errors["password"].'</span>';
+                }else{
+                    echo '<span class="error password"></span>';
+                }
+            
+            ?>
             <button class="btn mt-3" name="submit">Login</button>
         </form>
         <div class="text-center fs-6">
-            <a href="#">Forget password?</a> or <a href="RegisterForm.php">Sign up</a>
+            <a href="postView.php">Forget password?</a> or <a href="RegisterForm.php">Sign up</a>
         </div>
     </div>
 </body>
