@@ -29,7 +29,7 @@ if(isset($_POST['submit'])){
          
         $_SESSION['uname']=$row['uname'];
         
-        header("location: UserViewForm.php");
+        header("location: dashboard.php");
         
     
         // echo"<script>alert('Invalid Useid or email or password')</script>";

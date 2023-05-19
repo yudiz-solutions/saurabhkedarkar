@@ -4,7 +4,7 @@ session_start();
 // error_reporting(0);
 
 if (!isset($_SESSION['uname'])) {
-	header("Location: loginForm.php");
+	header("Location: index.php");
 }
 
 
@@ -29,42 +29,14 @@ if(isset($_POST['save']))
 }
 $resultSearch = mysqli_query($con, $sqlSearch);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Display Form</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
-    <style>
-        table {
-           font-weight: bold;
-           border: 1px solid black;
-           padding: 10px;
-           text-align: center;
-           margin-top: 20px;
-        }
-        .container{
-         margin-top: 30px;
-        }
-    </style>
-</head>
-
-<body>
-   <div class="container">
-       <form class="form-horizontal" method="post">
-       <div class="row">
-       <div class="form-group">
-            <label class="control-label col-sm-4" for="email"><b>Search  Record Information:</b>:</label>
-            <div class="col-sm-4">
+<?php include "header.php"?>
+<div class="container">
+   
+       <form class="form-horizontal" method="post" style="border: 1px solid black">
+       
+       <div class="form-group" style="margin-left: 10px;">
+            <label class="control-label col-sm-50" for="email"><b>Search  Record Information:</b>:</label>
+            <div class="col-sm-20">
               <input type="text" class="form-control" name="search" placeholder="search here" value="<?php echo isset($_POST['search']) ? $_POST['search'] : '' ?>">
             </div>
             <div class="col-sm-2">
@@ -72,14 +44,13 @@ $resultSearch = mysqli_query($con, $sqlSearch);
             </div>
         </div>
         <div class="form-group">
-            <span class="error" style="color:red;">* <?php echo $searchErr;?></span>
+            <span class="error" style="color:red;"><?php echo $searchErr;?></span>
         </div>
-      </div>
+    
       </form>   
 
-   </div>
 
-    <div class="container">
+
         <table class="table" id="TableForm">
             <thead>
                 <tr class="alert alert-info">
@@ -132,15 +103,9 @@ $resultSearch = mysqli_query($con, $sqlSearch);
   
     $(document).on("click",".remove",function(){
         var id = $(this).parents("tr").attr("id");
-         Swal.fire({
-	        icon: 'warning',
-  	        title: 'Are you sure you want to delete this record?',
-  	        showDenyButton: false,
-  	        showCancelButton: true,
-  	        confirmButtonText: 'Yes'
-           }).then((result) => {
+         
 
-        if(result.isConfirmed)
+        if(confirm("Are you sure you want to delete this record?"))
         {
             $.ajax({
                url: 'Delete.php',
@@ -156,12 +121,10 @@ $resultSearch = mysqli_query($con, $sqlSearch);
             });
         }
     });
-});
+
 
 
 
 </script>
 
-</body>
-
-</html>
+<?php include "footer.php"?>

@@ -1,25 +1,14 @@
+
+
 <?php
 include "connection.php";
  
-  $sql="SELECT * FROM `post_table`";
+  $sql="SELECT *,meta_post.key,meta_post.value FROM `post_table` INNER JOIN `meta_post` ON post_table.id = meta_post.Post_id";
   $result=mysqli_query($con,$sql);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
+<?php include "header.php"?>
     <div class="container my-5">
-        <div>
-          <a class="btn btn-primary" href="postAdd.php">Add Post</a>
-        </div>
 
     <table class="table" id="TableForm">
             <thead>
@@ -29,19 +18,25 @@ include "connection.php";
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Massage</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Caption</th>
                 </tr>   
             </thead>  
             <tbody>
                 <?php 
                 $num=0;
                 while($row=mysqli_fetch_array($result)){
-                    
                   $num++;
                  $fname = $row['fname'];
-                 
+                
                  $lname = $row['lname'];
                  $email = $row['email'];
                  $massage = $row['massage'];
+                //  $password = $row['key'];
+                 
+                 
+                 $value = $row['value'];
+
                  ?>
                  <tr >
                             <th scope="row" ><?php echo $num ;?></th>
@@ -49,6 +44,8 @@ include "connection.php";
                             <td scope="row" ><?php echo $lname ;?> </td>
                             <td scope="row" ><?php echo $email ;?> </td>
                             <td scope="row" ><?php echo $massage ;?> </td>
+                            <!-- <td scope="row" ><?php //echo $password ;?> </td> -->
+                            <td scope="row" ><?php echo $value ;?> </td>
                 </tr>           
                  <?php
                 }
@@ -58,5 +55,4 @@ include "connection.php";
     </div>
 
 
-</body>    
-</html>
+<?php include "footer.php"?>
