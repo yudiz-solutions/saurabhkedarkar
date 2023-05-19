@@ -32,13 +32,13 @@ $resultSearch = mysqli_query($con, $sqlSearch);
 <?php include "header.php"?>
 <div class="container">
    
-       <form class="form-horizontal" method="post" style="border: 1px solid black">
+       <form class="form-horizontal" method="post">
        
        <div class="form-group" style="margin-left: 10px;">
             <label class="control-label col-sm-50" for="email"><b>Search  Record Information:</b>:</label>
             <div class="col-sm-20">
               <input type="text" class="form-control" name="search" placeholder="search here" value="<?php echo isset($_POST['search']) ? $_POST['search'] : '' ?>">
-            </div>
+            </div><br>
             <div class="col-sm-2">
               <button type="submit" name="save" class="btn btn-success btn-sm">search</button>
             </div>

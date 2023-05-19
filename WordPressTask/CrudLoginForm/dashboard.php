@@ -1,3 +1,13 @@
+<?php
+session_start();
+// error_reporting(0);
+
+if (!isset($_SESSION['uname'])) {
+	header("Location: index.php");
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +28,7 @@
         <span class="link-text">Admin Panel</span>
       </h6>
       <ul>
-        <li><a href="UserViewForm.php" class="link-active" title="Dashboard">
+        <li><a href="dashboard.php" class="link-active" title="Dashboard">
             <span class="icon"><i class="fas fa-chart-bar"></i></span>
             <span class="link-text">Dashboard</span>
           </a></li>
@@ -39,9 +49,9 @@
             </a>
           </div>
         </li>
-        <li><a href="#" title="Profile">
+        <li><a href="UserViewForm.php" title="Profile">
             <span class="icon"><i class="fas fa-user-circle"></i></span>
-            <span class="link-text">Profile</span>
+            <span class="link-text">User View</span>
           </a></li>
         
         <li><a href="logout.php" title="Sign Out">

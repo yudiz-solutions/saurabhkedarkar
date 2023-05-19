@@ -8,7 +8,12 @@ include "connection.php";
 ?>
 
 <?php include "header.php"?>
+
+  
     <div class="container my-5">
+        <div Style="padding-bottom: 10px;" >
+            <a href="postAdd.php"><button class="btn btn-primary">Add Post</button></a>
+        </div>
 
     <table class="table" id="TableForm">
             <thead>
@@ -17,8 +22,8 @@ include "connection.php";
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Profile</th>
                     <th scope="col">Massage</th>
-                    <th scope="col">Password</th>
                     <th scope="col">Caption</th>
                 </tr>   
             </thead>  
@@ -32,6 +37,7 @@ include "connection.php";
                  $lname = $row['lname'];
                  $email = $row['email'];
                  $massage = $row['massage'];
+                 $file=$row['file'];
                 //  $password = $row['key'];
                  
                  
@@ -43,6 +49,7 @@ include "connection.php";
                             <td scope="row" ><?php echo $fname ;?> </td>
                             <td scope="row" ><?php echo $lname ;?> </td>
                             <td scope="row" ><?php echo $email ;?> </td>
+                            <th scoe="row" img='<?php echo $file ;?>'></th>
                             <td scope="row" ><?php echo $massage ;?> </td>
                             <!-- <td scope="row" ><?php //echo $password ;?> </td> -->
                             <td scope="row" ><?php echo $value ;?> </td>
