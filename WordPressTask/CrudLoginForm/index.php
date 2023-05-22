@@ -26,10 +26,11 @@ if(isset($_POST['submit'])){
         $result = mysqli_query($con, $sql);
         if($result->num_rows >0){
         $row = mysqli_fetch_assoc($result);
-         
+        $id =$row['id'];
+       
         $_SESSION['uname']=$row['uname'];
         
-        header("location: dashboard.php");
+        header("location: dashboard.php?userid=".$id);
         
     
         // echo"<script>alert('Invalid Useid or email or password')</script>";

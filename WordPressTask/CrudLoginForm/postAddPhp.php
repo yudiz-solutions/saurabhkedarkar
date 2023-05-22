@@ -36,10 +36,7 @@ if (isset($_POST['submit'])) {
       $folder="image/".$file;
 
       move_uploaded_file($tempFile,$folder);
-      
-    
      
-
    if (empty($error)) {
       $sql = "INSERT INTO `post_table` (`fname`, `lname`, `email`,`file`, `massage`) VALUES ('$fname', '$lname', '$email', '$folder','$massage')";
 
@@ -53,6 +50,7 @@ if (isset($_POST['submit'])) {
             'lname',
             'email',
             'massage',
+            'profile',
             'submit'
          );
          foreach ($_POST as $key => $value) {
@@ -68,10 +66,6 @@ if (isset($_POST['submit'])) {
             }
          }
       } 
-
-
-
-
    }
 }
 ?>
