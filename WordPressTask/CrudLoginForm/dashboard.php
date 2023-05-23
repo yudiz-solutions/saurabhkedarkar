@@ -24,8 +24,9 @@ if (!isset($_SESSION['uname'])) {
   <?php
   include "connection.php";
 
-  $id = isset($_GET['userid']) ? $_GET['userid'] : null;
-  $sql = "SELECT * FROM `registerform` WHERE `id`='$id'";
+  $name=$_SESSION['uname'];
+  // $id = isset($_GET['userid']) ? $_GET['userid'] : null;
+  $sql = "SELECT * FROM `registerform` WHERE `uname`='$name'";
 
   $result = mysqli_query($con, $sql);
   $row = mysqli_fetch_array($result);
@@ -107,3 +108,5 @@ if (!isset($_SESSION['uname'])) {
 </body>
 
 </html>
+
+
